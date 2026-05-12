@@ -213,6 +213,61 @@ let realValue = amount / Math.pow(1+inflation, years);
 /* LOSS */
 let loss = amount - realValue;
 
+/* YEARLY INFLATION TABLE */
+
+let yearlyTable = `
+<br><br>
+<h3>📊 Yearly Inflation Growth</h3>
+
+<div style="overflow-x:auto;">
+<table style="
+width:100%;
+border-collapse:collapse;
+font-size:14px;
+background:#fff;
+">
+
+<tr style="background:#0a7cff;color:#fff;">
+<th style="padding:10px;border:1px solid #ddd;">Year</th>
+<th style="padding:10px;border:1px solid #ddd;">Future Cost</th>
+<th style="padding:10px;border:1px solid #ddd;">Money Value</th>
+<th style="padding:10px;border:1px solid #ddd;">Inflation Impact</th>
+</tr>
+`;
+
+for(let i=1;i<=years;i++){
+
+let future = amount * Math.pow(1+inflation, i);
+
+let moneyValue = amount / Math.pow(1+inflation, i);
+
+let impact = amount - moneyValue;
+
+yearlyTable += `
+
+<tr>
+<td style="padding:8px;border:1px solid #ddd;text-align:center;">
+${i}
+</td>
+
+<td style="padding:8px;border:1px solid #ddd;">
+${format(future)}
+</td>
+
+<td style="padding:8px;border:1px solid #ddd;">
+${format(moneyValue)}
+</td>
+
+<td style="padding:8px;border:1px solid #ddd;color:red;">
+${format(impact)}
+</td>
+</tr>
+
+`;
+}
+
+yearlyTable += "</table></div>";
+
 /* RESULT */
 
 document.getElementById("result").innerHTML=
@@ -226,7 +281,8 @@ document.getElementById("result").innerHTML=
 "<b>🔥 INSIGHT</b><br>"+
 "✔ Inflation silently reduces wealth<br>"+
 "✔ Savings alone is not enough<br>"+
-"<b>✔ Investment is must to beat inflation</b>";
+"<b>✔ Investment is must to beat inflation</b>"
++ yearlyTable;;
 
 /* CHART */
 
@@ -325,7 +381,7 @@ document.getElementById("year").textContent = new Date().getFullYear();
 }
 </style>
 
-<a href="https://rethna1.github.io/fintrust192/" id="backBtn" title="Back">
+<a href="main-landing-page.html" id="backBtn" title="Back">
   <svg viewBox="0 0 24 24">
     <!-- LEFT POINTING ARROW (same style as scroll button) -->
     <path d="M15 6l-6 6 6 6" />
